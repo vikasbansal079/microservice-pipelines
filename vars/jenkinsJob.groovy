@@ -20,6 +20,11 @@ def sonarQubeScan(){
         withSonarQubeEnv('SonarQube_Local') {
           bat "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar -Dsonar.projectKey=${env.JOB_NAME}"
         }
+
+        def qg = waitForQualityGate()
+        if (qg.status != 'OK') {
+            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        }
     }
 }
 
