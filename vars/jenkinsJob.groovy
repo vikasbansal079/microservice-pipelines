@@ -13,14 +13,22 @@ def call(){
     }
 }
 
+def sonarQubeScan(){
+    stage("Sonar Scan") {
+        withSonarQubeEnv(credentialsId: 'SonarQube_Local') {
+          bat "mvn sonar:sonar -Dsonar.projectKey=${env.JOB_NAME}"  
+        }
+    }
+}
+
 def packageArtifact(){
     stage("Package artifact") {
-        sh "mvn package"
+        bat "mvn package"
     }
 }
 
 def buildAndTest(){
     stage("Backend tests"){
-        sh "mvn test"
+        bat "mvn test"
     }
 }
