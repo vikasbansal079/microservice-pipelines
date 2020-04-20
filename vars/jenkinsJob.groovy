@@ -17,7 +17,7 @@ def call(){
 
 def sonarQubeScan(){
     stage("Sonar Scan") {
-        withSonarQubeEnv(credentialsId: 'SonarQube_Local', installationName: 'SonarQube_Local') {
+        withSonarQubeEnv('SonarQube_Local') {
           bat "mvn sonar:sonar -Dsonar.projectKey=${env.JOB_NAME}"
         }
     }
