@@ -4,6 +4,8 @@ def call(){
             checkout scm
         }
 
+        sonarQubeScan()
+
         // Execute different stages depending on the job
         if(env.JOB_NAME.contains("deploy")){
             packageArtifact()
@@ -16,7 +18,7 @@ def call(){
 def sonarQubeScan(){
     stage("Sonar Scan") {
         withSonarQubeEnv(credentialsId: 'SonarQube_Local') {
-          bat "mvn sonar:sonar -Dsonar.projectKey=${env.JOB_NAME}"  
+          bat "mvn sonar:sonar -Dsonar.projectKey=${env.JOB_NAME}"
         }
     }
 }
